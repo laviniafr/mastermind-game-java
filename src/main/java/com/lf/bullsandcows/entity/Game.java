@@ -50,7 +50,6 @@ public class Game {
 		return this.rounds.size();
 	}
 
-
 	public List<Integer> getAnswer() {
 		return answer;
 	}

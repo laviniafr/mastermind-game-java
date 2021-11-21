@@ -2,6 +2,8 @@ package com.lf.bullsandcows.dao;
 
 import com.lf.bullsandcows.entity.Game;
 import com.lf.bullsandcows.entity.Round;
+import com.lf.bullsandcows.entity.Status;
+import com.lf.bullsandcows.service.UnknownStatusError;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -44,18 +46,17 @@ public class GameDaoDBImpl implements GameDao {
 	}
 
 	@Override
-	public void updateStatus(String status, int gameId) {
-		Game game = games.get(gameId);
-
+	public void updateStatus(Status status, int gameId) {
+		switch (status) {
+			case IN_PROGRESS -> games.get(gameId).setInProgress(true);
+			case COMPLETE -> games.get(gameId).setInProgress(false);
+			default -> throw new UnknownStatusError("Game status is unknown.");
+		}
 	}
 
 	@Override
-	public void updateElapsedTime(Instant startTime, Instant endTime) {
-
+	public void updateElapsedTime(Instant startTime, Instant endTime, int gameId) {
+		games.get(gameId).setElapsedTime(startTime, endTime);
 	}
 
-	@Override
-	public void playRound(int roundId) {
-
-	}
 }

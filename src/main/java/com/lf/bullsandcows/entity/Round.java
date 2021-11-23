@@ -2,7 +2,7 @@ package com.lf.bullsandcows.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Round {
@@ -10,8 +10,20 @@ public class Round {
 	private int roundId;
 	private int partial;
 	private int exact;
-	private LocalDateTime roundPlayTime;
-	private List<Integer> guessedDigits;
+//	private LocalDateTime roundPlayTime;
+	private int guess;
+
+	public Round() {
+
+	}
+
+	public int getGuess() {
+		return guess;
+	}
+
+	public void setGuess(int guess) {
+		this.guess = guess;
+	}
 
 	public int getRoundId() {
 		return roundId;
@@ -37,19 +49,12 @@ public class Round {
 		this.exact = exact;
 	}
 
-	public List<Integer> getGuessedDigits() {
-		return guessedDigits;
-	}
 
-	public void setGuessedDigits(List<Integer> guessedDigits) {
-		this.guessedDigits = guessedDigits;
-	}
-
-	public String getRoundPlayTime() {
-		return roundPlayTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-	}
-
-	public void setRoundPlayTime(Date roundPlayTime) {
-		this.roundPlayTime = LocalDateTime.now();
-	}
+//	public String getRoundPlayTime() {
+//		return roundPlayTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+//	}
+//
+//	public void setRoundPlayTime(LocalDateTime roundPlayTime) {
+//		this.roundPlayTime = roundPlayTime;
+//	}
 }

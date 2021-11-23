@@ -12,7 +12,7 @@ public interface RoundDao {
 	 * @param roundId
 	 * @return
 	 */
-	List<Integer> getRoundGuesses(int roundId);
+	Round addGuess(Round round);
 
 	/**
 	 * Method to return a Round object by its id.
@@ -23,18 +23,11 @@ public interface RoundDao {
 	Round getRoundById(int roundId);
 
 	/**
-	 * Method to update the guesses of a round in the database.
-	 *
-	 * @param guesses
-	 */
-	void updateRoundGuesses(List<Integer> guesses);
-
-	/**
 	 * Method to update the number of partial and exact guesses.
 	 *
 	 * @param partialGuesses
 	 * @param exactGuesses
 	 */
-	void updateSolutions(int partialGuesses, int exactGuesses);
+	void updateSolutions(Round round);
 
 }

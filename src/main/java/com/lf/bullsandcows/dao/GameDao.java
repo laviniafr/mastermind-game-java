@@ -27,7 +27,7 @@ public interface GameDao {
 	 * @param status - The status of the game.
 	 * @return -The new game object.
 	 */
-	public Game newGame(List<Integer> answer, Status status);
+	public Game newGame(List<Integer> answer, Game game);
 
 //	public Game addGame(Game game);
 

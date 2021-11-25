@@ -2,31 +2,24 @@ package com.lf.bullsandcows.dao;
 
 import com.lf.bullsandcows.entity.Round;
 
-import java.util.List;
-
+/**
+ * The interface Round dao.
+ */
 public interface RoundDao {
 
-	/**
-	 * Method to get the list of guesses based on a round id.
-	 *
-	 * @param roundId
-	 * @return
-	 */
-	Round addGuess(Round round);
 
 	/**
-	 * Method to return a Round object by its id.
+	 * Method to add a new round.
 	 *
-	 * @param roundId
-	 * @return
+	 * @param round - The round.
+	 * @return - The round.
 	 */
-	Round getRoundById(int roundId);
+	Round addRound(Round round);
 
 	/**
-	 * Method to update the number of partial and exact guesses.
+	 * Method to update the number of partial and exact guesses of a round.
 	 *
-	 * @param partialGuesses
-	 * @param exactGuesses
+	 * @param round The updated Round object.
 	 */
 	void updateSolutions(Round round);
 

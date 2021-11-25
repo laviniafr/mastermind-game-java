@@ -13,21 +13,23 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
+import static com.lf.bullsandcows.entity.Status.COMPLETE;
+
+/**
+ * The database implementation of the GameDao interface.
+ */
 @Repository
 public class GameDaoDBImpl extends EntityDaoHelpers implements GameDao {
 
+	/**
+	 * The Jdbc template.
+	 */
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-//	private final JdbcTemplate jdbcTemplate;
-
-//	@Autowired
-//	public GameDaoDBImpl(JdbcTemplate jdbcTemplate) {
-//		this.jdbcTemplate = jdbcTemplate;
-//	}
 
 	@Override
 	public List<Game> getAllGames() {
-		final String query = "SELECT * FROM game WHERE progress='COMPLETE'";
+		final String query = "SELECT * FROM game WHERE progress='COMPLETE';";
 		return jdbcTemplate.query(query, new GameMapper());
 	}
 
@@ -38,81 +40,42 @@ public class GameDaoDBImpl extends EntityDaoHelpers implements GameDao {
 		return jdbcTemplate.query(query, new RoundMapper(), gameId);
 	}
 
-//	@Override
-//	public Game newGame(List<Integer> answer, Status status) {
-//		Game game = new Game();
-//		game.setAnswer(arrToInt(answer));
-//		game.setStatus(Status.IN_PROGRESS);
-//		return game;
-//	}
 
 	@Override
 	public Game newGame(List<Integer> generatedAnswer, Game game) {
 		final String query = "INSERT INTO game(progress, answer) VALUES(?,?);";
+		/**
+		 * Using a generated keyholder to store and retrieve auto incremented ids.
+		 */
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update((Connection connection) -> {
 			PreparedStatement preparedStatement = connection.prepareStatement(
 					query,
 					Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, Status.IN_PROGRESS.name());
-			preparedStatement.setInt(2, EntityDaoHelpers.arrToInt(generatedAnswer));
+			preparedStatement.setInt(2, arrToInt(generatedAnswer));
 			return preparedStatement;
 		}, keyHolder);
 		game.setId(keyHolder.getKey().intValue());
 		return game;
 	}
 
+
 	@Override
 	public void completeGame(Game game) {
 		final String query = "UPDATE game SET " +
-				"progress = ?, " +
-				"elapsedTime = ? " +
+				"progress = ? " +
 				"WHERE id = ?;";
 		jdbcTemplate.update(query,
-				game.getStatus().name(),
-				game.getElapsedTime(),
+				COMPLETE.name(),
 				game.getId());
 	}
 
-
-//	@Override
-//	public Game addGame(Game game) {
-//		final String query = "INSERT INTO game(progress, elapsedTime, answer) VALUES(?,?,?);";
-//		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-//
-//		jdbcTemplate.update((Connection connection) -> {
-//			PreparedStatement preparedStatement = connection.prepareStatement(
-//					query,
-//					Statement.RETURN_GENERATED_KEYS
-//			);
-//			preparedStatement.setString(1, game.getStatus().name());
-//			preparedStatement.setString(2, game.getElapsedTime());
-//			preparedStatement.setInt(3, game.getAnswer());
-//			return preparedStatement;
-//		}, keyHolder);
-//		return game;
-//	}
-
 	@Override
 	public Game getGameById(int id) {
-		final String query = "SELECT * FROM game WHERE id=? AND progress='COMPLETE'";
+		final String query = "SELECT * FROM game WHERE id=?;";
 		return jdbcTemplate.queryForObject(query, new GameMapper(), id);
 	}
-
-//	@Override
-//	public List<Integer> generateAnswer() {
-//		return null;
-//	}
-
-//	@Override
-//	public void updateStatus(Status status, int gameId) {
-//
-//	}
-//
-//	@Override
-//	public void updateElapsedTime(Instant startTime, Instant endTime, int gameId) {
-//
-//	}
 
 
 }

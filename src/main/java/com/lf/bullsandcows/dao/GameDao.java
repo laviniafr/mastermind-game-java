@@ -7,48 +7,48 @@ import com.lf.bullsandcows.entity.Status;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * The interface Game dao.
+ */
 public interface GameDao {
 
 	/**
 	 * Method to get all the games played so far.
-	 * @return
+	 *
+	 * @return - A list of type Game.
 	 */
 	List<Game> getAllGames();
 
 	/**
-	 * Method to get all the rounds of a game ID.
-	 * @return
+	 * Method to get all the rounds of a game based on its id.
+	 *
+	 * @param gameId - The game id.
+	 * @return - A list of type Round containing all the rounds with the given game id.
 	 */
 	List<Round> getRounds(int gameId);
 
 	/**
-	 * Method to create a new game.
+	 * Method to initialise a new game.
+	 *
 	 * @param answer - The generated sequence of numbers.
-	 * @param status - The status of the game.
+	 * @param game   - The game.
 	 * @return -The new game object.
 	 */
 	public Game newGame(List<Integer> answer, Game game);
 
-//	public Game addGame(Game game);
-
+	/**
+	 * Method to complete a game.
+	 *
+	 * @param game - The game object.
+	 */
 	public void completeGame(Game game);
 
 	/**
 	 * Method to get a game's stats by id.
-	 * @param id
-	 * @return
+	 *
+	 * @param id The id.
+	 * @return - The game object.
 	 */
 	Game getGameById(int id);
-
-//	/**
-//	 * Method to update the status of the game.
-//	 */
-//	void updateStatus(Status status, int gameId);
-//
-//	/**
-//	 * Method to update the elapsed time of a game.
-//	 */
-//	void updateElapsedTime(Instant startTime, Instant endTime, int gameId);
-
 
 }

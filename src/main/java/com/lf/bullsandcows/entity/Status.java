@@ -1,6 +1,16 @@
 package com.lf.bullsandcows.entity;
 
+/**
+ * The enum Status.
+ */
 public enum Status {
-	IN_PROGRESS, COMPLETE, NOT_STARTED
+	/**
+	 * In progress status.
+	 */
+	IN_PROGRESS,
+	/**
+	 * Complete status.
+	 */
+	COMPLETE
 
 }
